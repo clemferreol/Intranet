@@ -120,10 +120,13 @@ class MatiereController extends Controller
 
    }
 
+   /**
+    * @Security("has_role('ROLE_SUPER_ADMIN')")
+    */
    public function editAction($id, Request $request)
    {
 
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access Denied!');
+        //$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Access Denied!');
      // Récupération d'une annonce déjà existante, d'id $id.
         $matiere = $this->getDoctrine()
           ->getManager()
@@ -170,10 +173,14 @@ class MatiereController extends Controller
 
    }
 
+   /**
+    * @Security("has_role('ROLE_SUPER_ADMIN')")
+    */
+
    public function deleteAction(Request $request, $id)
    {
 
-    $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access Denied !');
+    //$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access Denied !');
      $em = $this->getDoctrine()->getManager();
 
     $matiere = $em->getRepository('IntranetBundle:Matiere')->find($id);

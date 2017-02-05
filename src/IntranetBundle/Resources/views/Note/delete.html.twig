@@ -1,0 +1,27 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Supprimer une note - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Supprimer une note</h2>
+
+  <p>
+    Etes-vous certain de vouloir supprimer la note "{{ note.value }}" ?
+  </p>
+
+  {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+  <form action="{{ path('note_delete', {'id': note.id}) }}" method="post">
+    <a href="{{ path('note_view', {'id': note.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour aux matière
+    </a>
+    {# Ici j'ai écrit le bouton de soumission à la main #}
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {# Ceci va générer le champ CSRF #}
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}

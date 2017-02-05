@@ -3,7 +3,7 @@ security:
     IntranetUserBundle\Entity\User: sha512
 
   role_hierarchy:
-    ROLE_ADMIN:       ROLE_USER
+    ROLE_ADMIN:       [ROLE_USER, ROLE_NOTE]
     ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN]
 
   providers:
@@ -37,5 +37,6 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
+        - { path: ^/teacher/, role: ROLE_NOTE }
         - { path: ^/intranet, role: ROLE_USER }

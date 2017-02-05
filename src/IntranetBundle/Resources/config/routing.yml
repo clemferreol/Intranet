@@ -29,21 +29,25 @@ intranet_delete:
     requirements:
         id: \d+
 
-intranet_view_note:
-    path:      /note/{id}
+note_home:
+    path:      note/list
+    defaults: { _controller: IntranetBundle:Note:index }
+
+note_view:
+    path:      note/{id}
     defaults: { _controller: IntranetBundle:Note:view }
 
-intranet_add:
-    path:      admin/note/add
+note_add:
+    path:      teacher/note/add
     defaults: { _controller: IntranetBundle:Note:add }
 
-intranet_edit:
-    path:      admin/note/edit/{id}
+note_edit:
+    path:      teacher/note/edit/{id}
     defaults: { _controller: IntranetBundle:Note:edit }
     requirements:
         id: \d+
 
-intranet_delete:
+note_delete:
     path:      admin/note/delete/{id}
     defaults: { _controller: IntranetBundle:Note:delete }
     requirements:

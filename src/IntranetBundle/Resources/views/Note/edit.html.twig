@@ -1,0 +1,24 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Modifier une note - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Modifier une note</h2>
+
+  {{ include("IntranetBundle:Note:form.html.twig") }}
+
+  <p>
+    Vous éditez une note déjà existante.
+  </p>
+
+  <p>
+    <a href="{{ path('note_view', {'id': note.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour aux matières
+    </a>
+  </p>
+
+{% endblock %}

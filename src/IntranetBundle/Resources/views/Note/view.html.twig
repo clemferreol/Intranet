@@ -1,0 +1,36 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Notes - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Note : {{ note.value }}</h2>
+
+  <div class="well">
+    {{ note.comment }}
+  </div>
+
+  <p>
+    <a href="{{ path('note_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('note_edit', {'id': note.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier la note
+    </a>
+    {% endif %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <a href="{{ path('note_delete', {'id': note.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer la note
+    </a>
+      {% endif %}
+  </p>
+
+{% endblock %}

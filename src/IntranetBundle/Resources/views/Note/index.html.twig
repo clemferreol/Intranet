@@ -1,0 +1,24 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Liste des Notes</h2>
+
+  <ul>
+    {% for note in listNotes %}
+      <li>
+        Note :<a href="{{ path('note_view', {'id': note.id}) }}">
+          {{ note.value }}
+        </a>
+        </br/>{{ note.comment }}
+      </li>
+    {% else %}
+      <li>Pas (encore !) de matières</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

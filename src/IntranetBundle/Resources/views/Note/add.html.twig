@@ -1,0 +1,24 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Ajouter une note - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Ajouter une note</h2>
+
+  {{ include("IntranetBundle:Note:form.html.twig") }}
+
+  <p>
+
+  </p>
+
+  <p>
+    <a href="{{ path('note_home')}}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour aux matières
+    </a>
+  </p>
+
+{% endblock %}
