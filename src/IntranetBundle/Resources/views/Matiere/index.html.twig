@@ -1,0 +1,25 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Liste des Matière</h2>
+
+  <ul>
+    {% for matiere in listMatieres %}
+      <li>
+        <a href="{{ path('intranet_view', {'id': matiere.id}) }}">
+          {{ matiere.title }}
+        </a>
+        par {{ matiere.author }},
+        le {{ matiere.date|date('d/m/Y') }}
+      </li>
+    {% else %}
+      <li>Pas (encore !) de matières</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

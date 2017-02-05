@@ -1,0 +1,24 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Ajouter une matiere - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Ajouter une matière</h2>
+
+  {{ include("IntranetBundle:Matiere:form.html.twig") }}
+
+  <p>
+
+  </p>
+
+  <p>
+    <a href="{{ path('intranet_home')}}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à l'annonce
+    </a>
+  </p>
+
+{% endblock %}

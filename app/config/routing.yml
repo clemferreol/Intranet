@@ -1,0 +1,11 @@
+intranet_user:
+    resource: "@IntranetUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+intranet:
+    resource: "@IntranetBundle/Resources/config/routing.yml"
+    prefix:   /intranet
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

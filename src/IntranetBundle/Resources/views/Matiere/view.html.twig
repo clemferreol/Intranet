@@ -1,0 +1,33 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Matières - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>{{ matiere.title }}</h2>
+  <i>Par {{ matiere.author }}, le {{ matiere.date|date('d/m/Y') }}</i>
+
+  <div class="well">
+    {{ matiere.content }}
+  </div>
+
+  <p>
+    <a href="{{ path('intranet_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <a href="{{ path('intranet_edit', {'id': matiere.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier la matiere
+    </a>
+    <a href="{{ path('intranet_delete', {'id': matiere.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer la matiere
+    </a>
+      {% endif %}
+  </p>
+
+{% endblock %}

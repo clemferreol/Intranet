@@ -1,0 +1,50 @@
+intranet_home:
+    path:      /
+    defaults: { _controller: IntranetBundle:Matiere:index }
+
+
+intranet_view:
+    path:      /matiere/{id}
+    defaults: { _controller: IntranetBundle:Matiere:view }
+    requirements:
+        id: \d+
+
+intranet_view_list:
+    path:      /matiere
+    defaults: { _controller: IntranetBundle:Matiere:list }
+
+intranet_add:
+    path:      admin/add
+    defaults: { _controller: IntranetBundle:Matiere:add }
+
+intranet_edit:
+    path:      admin/edit/{id}
+    defaults: { _controller: IntranetBundle:Matiere:edit }
+    requirements:
+        id: \d+
+
+intranet_delete:
+    path:      admin/delete/{id}
+    defaults: { _controller: IntranetBundle:Matiere:delete }
+    requirements:
+        id: \d+
+
+intranet_view_note:
+    path:      /note/{id}
+    defaults: { _controller: IntranetBundle:Note:view }
+
+intranet_add:
+    path:      admin/note/add
+    defaults: { _controller: IntranetBundle:Note:add }
+
+intranet_edit:
+    path:      admin/note/edit/{id}
+    defaults: { _controller: IntranetBundle:Note:edit }
+    requirements:
+        id: \d+
+
+intranet_delete:
+    path:      admin/note/delete/{id}
+    defaults: { _controller: IntranetBundle:Note:delete }
+    requirements:
+        id: \d+

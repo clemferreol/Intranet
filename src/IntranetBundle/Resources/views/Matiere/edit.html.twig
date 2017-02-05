@@ -1,0 +1,25 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Modifier une matiere - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Modifier une matière</h2>
+
+  {{ include("IntranetBundle:Matiere:form.html.twig") }}
+
+  <p>
+    Vous éditez une annonce déjà existante, merci de ne pas changer
+    l'esprit général de l'annonce déjà publiée.
+  </p>
+
+  <p>
+    <a href="{{ path('intranet_view', {'id': matiere.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à l'annonce
+    </a>
+  </p>
+
+{% endblock %}
