@@ -50,6 +50,7 @@ class Matiere
      */
     private $content;
 
+
     public function __construct()
   {
     $this->date         = new \Datetime();
@@ -161,4 +162,5 @@ class Matiere
     {
         return $this->content;
     }
+
 }

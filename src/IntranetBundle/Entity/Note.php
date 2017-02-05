@@ -36,6 +36,22 @@ class Note
     private $comment;
 
     /**
+     * @var Matiere
+     * @ORM\ManyToMany(targetEntity="IntranetBundle\Entity\Matiere", cascade={"persist"})
+     * @ORM\Column(name="matiere", type="integer", nullable=true)
+     */
+    private $matiere;
+
+    /**
+     * @var User
+     * @ORM\ManyToMany(targetEntity="IntranetUserBundle\Entity\User", cascade={"persist"})
+     * @ORM\Column(name="student", type="integer", nullable=true)
+     */
+    private $student;
+
+
+
+    /**
      * Get id
      *
      * @return int
@@ -91,5 +107,53 @@ class Note
     public function getComment()
     {
         return $this->comment;
-    }        
+    }
+
+    /**
+     * Set
+     *
+     * @param string $matiere
+     *
+     * @return Note
+     */
+    public function setMatiere($matiere)
+    {
+        $this->matiere = $matiere;
+
+        return $this;
+    }
+
+    /**
+     * Get matiere
+     *
+     * @return string
+     */
+    public function getMatiere()
+    {
+        return $this->matiere;
+    }
+
+    /**
+     * Set
+     *
+     * @param string $student
+     *
+     * @return Note
+     */
+    public function setStudent($student)
+    {
+        $this->student = $student;
+
+        return $this;
+    }
+
+    /**
+     * Get student
+     *
+     * @return string
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
 }

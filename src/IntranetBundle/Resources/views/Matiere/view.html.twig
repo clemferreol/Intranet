@@ -14,7 +14,7 @@
   </div>
 
   <p>
-    <a href="{{ path('intranet_home') }}" class="btn btn-default">
+    <a href="{{ path('intranet_home', {'userid': app.user.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour à la liste
     </a>
@@ -28,6 +28,11 @@
       Supprimer la matiere
     </a>
       {% endif %}
+      <a href="{{ path('matiere_subscribe', {'id': matiere.id}) }}" class="btn btn-default">
+        <i class="glyphicon glyphicon-trash"></i>
+        S'inscrire
+      </a>
+
   </p>
 
 {% endblock %}

@@ -2,6 +2,10 @@ intranet_home:
     path:      /
     defaults: { _controller: IntranetBundle:Matiere:index }
 
+matiere_subscribe:
+    path: /suscribe/{id}
+    defaults: { _controller: IntranetBundle:Matiere:subscribe }
+
 
 intranet_view:
     path:      /matiere/{id}

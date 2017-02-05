@@ -3,6 +3,7 @@
 namespace IntranetBundle\Controller;
 
 use IntranetBundle\Entity\Matiere;
+use IntranetUserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -206,5 +207,24 @@ class MatiereController extends Controller
       'matiere' => $matiere,
       'form'   => $form->createView(),
     ));
+   }
+
+   public function subscribeAction (Request $request, $id){
+     $em = $this->getDoctrine()->getManager();
+     $userManager = $this->get('fos_user.user_manager');
+     $user = $this->getUser();
+     $matiere = $em->getRepository('IntranetBundle:Matiere')->find($id);
+
+     $user->setMatiere($matiere);
+     $userManager->updateUser($user);
+
+     $request->getSession()->getFlashBag()->add('notice', 'Inscription bien enregistrée.');
+
+     return $this->redirectToRoute('intranet_view', array('id' => $matiere->getId()));
+
+
+
+
+
    }
 }
