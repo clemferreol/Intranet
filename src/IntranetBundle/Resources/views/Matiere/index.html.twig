@@ -14,7 +14,7 @@
         <a href="{{ path('intranet_view', {'id': matiere.id}) }}">
           {{ matiere.title }}
         </a>
-        par {{ matiere.author }},
+        par {{ matiere.teacher }},
         le {{ matiere.date|date('d/m/Y') }}
       </li>
     {% else %}

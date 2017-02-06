@@ -40,16 +40,12 @@ class Note
     /**
        * @ORM\ManyToMany(targetEntity="IntranetBundle\Entity\Matiere",inversedBy="notes", cascade={"persist"})
        * @ORM\JoinColumn(name="matiere_id", referencedColumnName="id")
-       * @Assert\Type(type="IntranetBundle\Entity\Matiere")
-       * @Assert\Valid()
        */
     private $matiere;
 
     /**
        * @ORM\ManyToMany(targetEntity="IntranetUserBundle\Entity\User",inversedBy="notes", cascade={"persist"})
        * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-       * @Assert\Type(type="IntranetUserBundle\Entity\User")
-       * @Assert\Valid()
        */
     private $student;
 

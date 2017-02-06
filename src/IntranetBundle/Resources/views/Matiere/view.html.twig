@@ -9,7 +9,7 @@
 
 
   <h2>{{ matiere.title }}</h2>
-  <i>Par {{ matiere.author }}, le {{ matiere.date|date('d/m/Y') }}</i>
+  <i>Enseignant : {{ matiere.teacher }}. Créée le {{ matiere.date|date('d/m/Y') }}</i>
 
   <div class="well">
     {{ matiere.content }}

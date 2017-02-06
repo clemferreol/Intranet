@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class NoteController extends Controller
 {
@@ -25,6 +27,8 @@ class NoteController extends Controller
         ->getRepository('IntranetBundle:Note')
         ->findAll()
       ;
+
+      
 
     // Et modifiez le 2nd argument pour injecter notre liste
     return $this->render('IntranetBundle:Note:index.html.twig', array(
@@ -66,19 +70,25 @@ class NoteController extends Controller
      $user = $userManager->findUserByUsername($username);
 
      $matiere = $em->getRepository('IntranetBundle:Matiere')->find($id);
+
      $note = new Note();
 
-$note->setMatiere($matiere);
+     $form   = $this->createForm(NoteType::class, $note, array(
+       'entity_manager' => $em,
+       'userManager' => $userManager
+     ));
 
-     $form   = $this->get('form.factory')->create(NoteType::class, $note);
-
-      //$form->get('student')->setData($user);
-      //$form->get('matiere')->setData($matiere);
-      //var_dump($note);die;
+      $form->get('student')->setData($user);
+      $form->get('matiere')->setData($matiere);
 
     if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
+      $user->setNotes($note);
+      $matiere->setNotes($note);
 
+
+      $userManager->updateUser($user, false);
+      $em->persist($matiere);
       $em->persist($note);
       $em->flush();
 

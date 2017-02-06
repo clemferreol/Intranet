@@ -239,8 +239,18 @@ class MatiereController extends Controller
    }
 
    public function viewListAction (Request $request){
+
+     $repo = $this->getDoctrine()->getManager()->getRepository('IntranetBundle:Matiere');
      $user = $this->getUser();
-     $listMatieres = $user->getMatiere();
+
+     $query = $repo->createQueryBuilder('m')
+      ->where('m.teacher = :user')
+      ->setParameter('user', $user)
+      ->orderBy('m.title', 'ASC')
+    ->getQuery();
+
+     $listMatieres = $query->getResult();
+
 
      return $this->render('IntranetBundle:Matiere:listMatieres.html.twig', array(
        'listMatieres' => $listMatieres
@@ -256,5 +266,23 @@ class MatiereController extends Controller
      return $this->render('IntranetBundle:Matiere:listStudent.html.twig', array(
        'listStudent' => $listStudent, 'id' => $id
      ));
+   }
+
+   public function viewTeachersAction (Request $request, $id){
+     $userManager = $this->get('fos_user.user_manager');
+     $listUsers = $userManager->findUsers();
+     $listTeacher = array();
+
+     foreach ($listUsers as $user){
+       if($user->hasRole('ROLE_ADMIN')){
+         array_push($listTeacher, $user);
+       }
+     }
+
+     return $this->render('IntranetBundle:Matiere:listTeacher.html.twig', array(
+       'listTeacher' => $listTeacher
+     ));
+
+
    }
 }

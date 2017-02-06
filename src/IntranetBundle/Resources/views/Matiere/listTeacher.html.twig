@@ -1,0 +1,23 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Liste des inscrits</h2>
+
+  <ul>
+    {% for user in listTeacher %}
+      <li>
+        
+          {{ user.username }}
+        </a>
+      </li>
+    {% else %}
+      <li>Pas (encore !) d'inscrits</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

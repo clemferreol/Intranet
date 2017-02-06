@@ -4,6 +4,7 @@ namespace IntranetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Matiere
@@ -40,9 +41,10 @@ class Matiere
     /**
      * @var string
      *
-     * @ORM\Column(name="author", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="IntranetUserBundle\Entity\User", inversedBy="matiereTeach")
+     * @ORM\JoinColumn(name="teach_id", referencedColumnName="id")
      */
-    private $author;
+    private $teacher;
 
     /**
      * @var string
@@ -52,17 +54,24 @@ class Matiere
     private $content;
 
     /**
-       * @ORM\ManyToMany(targetEntity="IntranetUserBundle\Entity\User",inversedBy="matiere", cascade={"persist"})
-       * @ORM\JoinTable(name="user_matiere")
-       * @Assert\Type(type="IntranetUserBundle\Entity\User")
-       * @Assert\Valid()
+       * @ORM\ManyToMany(targetEntity="IntranetUserBundle\Entity\User",inversedBy="matiere")
+       * @ORM\JoinTable(name="user_matiere",
+       * joinColumns={@ORM\JoinColumn(name="matiere_id", referencedColumnName="id", nullable=true)})
        */
     private $student;
+
+    /**
+       * @ORM\ManyToMany(targetEntity="IntranetBundle\Entity\Note",mappedBy="matiere", cascade={"persist"})
+       * @ORM\JoinTable(name="user_matiere_note",
+       * joinColumns={@ORM\JoinColumn(name="matiere_id", referencedColumnName="id", nullable=true)})
+       */
+    private $notes;
 
     public function __construct()
   {
     $this->date         = new \Datetime();
     $this->student = new ArrayCollection();
+    $this->notes = new ArrayCollection();
   }
 
 
@@ -131,9 +140,9 @@ class Matiere
      *
      * @return Matiere
      */
-    public function setAuthor($author)
+    public function setTeacher($author)
     {
-        $this->author = $author;
+        $this->teacher = $author;
 
         return $this;
     }
@@ -143,9 +152,9 @@ class Matiere
      *
      * @return string
      */
-    public function getAuthor()
+    public function getTeacher()
     {
-        return $this->author;
+        return $this->teacher;
     }
 
     /**
@@ -175,7 +184,7 @@ class Matiere
        * Set student
        *
        * @param \Doctrine\Common\Collection\ArrayCollection $student
-       * @return Note
+       * @return Matiere
        */
       public function setStudent(\IntranetUserBundle\Entity\User $student = null)
       {
@@ -185,11 +194,33 @@ class Matiere
       }
 
       /**
-       * Get student
+       * Get notes
        * @return (\IntranetUserBundle\Entity\User[]|ArrayCollection
        */
-      public function getStudent()
+      public function getNotes()
       {
-          return $this->student;
+          return $this->notes;
       }
+
+      /**
+         * Set notes
+         *
+         * @param \Doctrine\Common\Collection\ArrayCollection $notes
+         * @return Matiere
+         */
+        public function setNotes(\IntranetBundle\Entity\Note $notes = null)
+        {
+            $this->notes->add($notes);
+
+            return $this;
+        }
+
+        /**
+         * Get student
+         * @return (\IntranetUserBundle\Entity\User[]|ArrayCollection
+         */
+        public function getStudent()
+        {
+            return $this->student;
+        }
 }
