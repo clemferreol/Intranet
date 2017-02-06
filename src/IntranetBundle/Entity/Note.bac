@@ -39,7 +39,7 @@ class Note
 
     /**
        * @ORM\ManyToMany(targetEntity="IntranetBundle\Entity\Matiere",inversedBy="notes", cascade={"persist"})
-       * @ORM\JoinColumn(name="matiere_id", referencedColumnName="id")
+       * @ORM\JoinTable(name="note_user_matiere",joinTable="matiere")
        * @Assert\Type(type="IntranetBundle\Entity\Matiere")
        * @Assert\Valid()
        */
@@ -47,7 +47,7 @@ class Note
 
     /**
        * @ORM\ManyToMany(targetEntity="IntranetUserBundle\Entity\User",inversedBy="notes", cascade={"persist"})
-       * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+       * @ORM\JoinTable(name="note_user_matiere",joinTable="user")
        * @Assert\Type(type="IntranetUserBundle\Entity\User")
        * @Assert\Valid()
        */

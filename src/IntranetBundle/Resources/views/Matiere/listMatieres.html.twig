@@ -1,0 +1,34 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Mes Matière</h2>
+
+  <ul>
+    {% for matiere in listMatieres %}
+      <li>
+        {% if is_granted('ROLE_ADMIN')%}
+        <a href="{{ path('student_list', {'id': matiere.id}) }}">
+          {{ matiere.title }}
+        </a>
+        {% elseif  is_granted('ROLE_USER')%}
+        <a href="{{ path('intranet_view', {'id': matiere.id}) }}">
+          {{ matiere.title }}
+        </a>
+        par {{ matiere.author }},
+        le {{ matiere.date|date('d/m/Y') }}
+
+
+
+        {% endif %}
+      </li>
+    {% else %}
+      <li>Pas (encore !) de matières</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

@@ -15,16 +15,31 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class MatiereController extends Controller
 {
     public function indexAction()
     {
+      $user = $this->getUser();
+      $listMatieres = new ArrayCollection();
+
+      if($user->hasRole('ROLE_ADMIN')){
+        $listMatieres = $user->getMatiere();
+        return $this->render('IntranetBundle:Matiere:listMatieres.html.twig', array(
+          'listMatieres' => $listMatieres
+        ));
+      }else{
         $listMatieres = $this->getDoctrine()
         ->getManager()
         ->getRepository('IntranetBundle:Matiere')
         ->findAll()
       ;
+      return $this->render('IntranetBundle:Matiere:index.html.twig', array(
+        'listMatieres' => $listMatieres
+      ));
+      }
+
 // Notre liste d'annonce en dur
     /*$listMatieres = array(
       array(
@@ -48,9 +63,6 @@ class MatiereController extends Controller
     );*/
 
     // Et modifiez le 2nd argument pour injecter notre liste
-    return $this->render('IntranetBundle:Matiere:index.html.twig', array(
-      'listMatieres' => $listMatieres
-    ));
 
     }
 
@@ -215,16 +227,34 @@ class MatiereController extends Controller
      $user = $this->getUser();
      $matiere = $em->getRepository('IntranetBundle:Matiere')->find($id);
 
+     $matiere->setStudent($user);
      $user->setMatiere($matiere);
-     $userManager->updateUser($user);
+     $em->persist($matiere);
+     $userManager->updateUser($user, false);
+     $em->flush();
 
      $request->getSession()->getFlashBag()->add('notice', 'Inscription bien enregistrée.');
 
      return $this->redirectToRoute('intranet_view', array('id' => $matiere->getId()));
+   }
 
+   public function viewListAction (Request $request){
+     $user = $this->getUser();
+     $listMatieres = $user->getMatiere();
 
+     return $this->render('IntranetBundle:Matiere:listMatieres.html.twig', array(
+       'listMatieres' => $listMatieres
+     ));
+   }
 
+   public function listStudentAction (Request $request, $id){
+     $user = $this->getUser();
+     $em = $this->getDoctrine()->getManager();
+     $matiere = $em->getRepository('IntranetBundle:Matiere')->find($id);
+     $listStudent = $matiere->getStudent();
 
-
+     return $this->render('IntranetBundle:Matiere:listStudent.html.twig', array(
+       'listStudent' => $listStudent, 'id' => $id
+     ));
    }
 }

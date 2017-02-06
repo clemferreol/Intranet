@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use IntranetBundle\Entity\Matiere;
 use IntranetUserBundle\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class NoteType extends AbstractType
 {
@@ -21,7 +21,8 @@ class NoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
       $builder
-      
+      ->add('student',     ArrayCollection::class)
+      ->add('matiere',     ArrayCollection::class)
       ->add('value',     TextType::class)
       ->add('comment',   TextareaType::class)
       ->add('save',      SubmitType::class);

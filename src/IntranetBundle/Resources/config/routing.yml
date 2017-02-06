@@ -6,6 +6,13 @@ matiere_subscribe:
     path: /suscribe/{id}
     defaults: { _controller: IntranetBundle:Matiere:subscribe }
 
+matiere_list:
+    path: /matieres/list
+    defaults: { _controller: IntranetBundle:Matiere:viewList }
+
+student_list :
+    path: /matieres/list/{id}/student/
+    defaults: { _controller: IntranetBundle:Matiere:listStudent }
 
 intranet_view:
     path:      /matiere/{id}
@@ -42,7 +49,7 @@ note_view:
     defaults: { _controller: IntranetBundle:Note:view }
 
 note_add:
-    path:      teacher/note/add
+    path:      /matieres/list/{id}/student/teacher/note/add/{username}
     defaults: { _controller: IntranetBundle:Note:add }
 
 note_edit:

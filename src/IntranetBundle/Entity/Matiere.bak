@@ -3,7 +3,6 @@
 namespace IntranetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Matiere
@@ -53,7 +52,7 @@ class Matiere
 
     /**
        * @ORM\ManyToMany(targetEntity="IntranetUserBundle\Entity\User",inversedBy="matiere", cascade={"persist"})
-       * @ORM\JoinTable(name="user_matiere")
+       * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
        * @Assert\Type(type="IntranetUserBundle\Entity\User")
        * @Assert\Valid()
        */

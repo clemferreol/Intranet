@@ -3,6 +3,7 @@
 namespace IntranetBundle\Controller;
 
 use IntranetBundle\Entity\Note;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,13 +59,26 @@ class NoteController extends Controller
   /**
    * @Security("has_role('ROLE_NOTE')")
    */
-   public function addAction(Request $request)
+   public function addAction(Request $request, $id, $username)
    {
+     $em = $this->getDoctrine()->getManager();
+     $userManager = $this->get('fos_user.user_manager');
+     $user = $userManager->findUserByUsername($username);
+
+     $matiere = $em->getRepository('IntranetBundle:Matiere')->find($id);
      $note = new Note();
-    $form   = $this->get('form.factory')->create(NoteType::class, $note);
+
+$note->setMatiere($matiere);
+
+     $form   = $this->get('form.factory')->create(NoteType::class, $note);
+
+      //$form->get('student')->setData($user);
+      //$form->get('matiere')->setData($matiere);
+      //var_dump($note);die;
 
     if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-      $em = $this->getDoctrine()->getManager();
+
+
       $em->persist($note);
       $em->flush();
 
