@@ -173,25 +173,53 @@ class NoteController extends Controller
    }
 
    public function listNotesForUserAction (Request $request){
-     $user = $this->getUser();
-     $em = $this->getDoctrine()->getManager();
-     $listAllNotes = $em->getRepository('IntranetBundle:Note')->findAll();
-     $listNotes = array();
-
-     foreach($listAllNotes as $note){
-      $students = $note->getStudent();
-       foreach($students as $student){
-         if($student == $user){
-           array_push($listNotes, $note);
-         }
-       }
-
-     }
+      $user = $this->getUser();
+      $em = $this->getDoctrine()->getManager();
+      $repo = $em->getRepository('IntranetBundle:Note');
+      $listAllNotes = $em->getRepository('IntranetBundle:Note')->findAll();
+      $listNotes = array();
 
 
+      if($user->hasrole('ROLE_ADMIN')){
 
-     return $this->render('IntranetBundle:Note:listNotes.html.twig', array(
-     'listNotes' => $listNotes,
-   ));
-   }
+
+      $repo = $this->getDoctrine()->getManager()->getRepository('IntranetBundle:Matiere');
+      $user = $this->getUser();
+
+      if($user->hasrole('ROLE_ADMIN')){
+       $query = $repo->createQueryBuilder('m')
+       ->where('m.teacher = :user')
+       ->setParameter('user', $user)
+       ->orderBy('m.title', 'ASC')
+     ->getQuery();
+
+      $listMatieres = $query->getResult();
+
+      foreach($listMatieres as $matiere){
+       array_push($listNotes, $matiere->getNotes());
+      }
+
+       return $this->render('IntranetBundle:Note:listNotes.html.twig', array(
+      'listNotes' => $listNotes,
+    ));
+  } elseif($user->hasrole('ROLE_USER')){
+        foreach($listAllNotes as $note){
+       $students = $note->getStudent();
+        foreach($students as $student){
+          if($student == $user){
+            array_push($listNotes, $note);
+          }
+        }
+
+      }
+
+      return $this->render('IntranetBundle:Note:listNotes.html.twig', array(
+      'listNotes' => $listNotes,
+    ));
+      }
+
+
+
+    }
+  }
 }

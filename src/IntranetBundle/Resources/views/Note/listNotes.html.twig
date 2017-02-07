@@ -7,7 +7,7 @@
 {% block intranet_body %}
 
   <h2>Liste des Notes</h2>
-
+  {% if is_granted('ROLE_ADMIN')  %}
   <ul>
     {% for note in listNotes %}
     {% for user in note.student %}
@@ -32,5 +32,33 @@
       <li>Pas (encore !) de matières</li>
     {% endfor %}
   </ul>
+  {% elseif is_granted('ROLE_ADMIN') %}
+    <ul>
+    {% for note in listNotes %}
+    {% for matiere in note.matiere %}
+    {% if matiere.teacher == app.user %}
+    <li>
+    Matiere : {{ matiere.title }}</br/>
+
+
+    {% for user in note.student %}
+       Eleve : {{ user.username }}</br/>
+
+
+
+
+    Note :<a href="{{ path('note_view', {'id': note.id}) }}">
+      {{ note.value }}
+    </a>
+  </br/>{{ note.comment }}</br/></br/>
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+  </li>
+    {% else %}
+      <li>Pas (encore !) de matières</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
 {% endblock %}
