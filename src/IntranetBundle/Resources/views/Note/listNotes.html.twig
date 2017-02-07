@@ -7,7 +7,7 @@
 {% block intranet_body %}
 
   <h2>Liste des Notes</h2>
-  {% if is_granted('ROLE_ADMIN')  %}
+  {% if is_granted('ROLE_USER')  %}
   <ul>
     {% for note in listNotes %}
     {% for user in note.student %}
