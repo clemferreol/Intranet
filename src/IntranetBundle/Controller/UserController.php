@@ -32,12 +32,6 @@ class UserController extends Controller{
       $formEditUser->handleRequest($request);
       if ($formEditUser->isValid()) {
 
-          // Getting the variable of the form
-          //$selectedUser = $request->request->get('value');
-          // Getting the user infos
-          //$editUser = $this->getDoctrine()->getRepository('MainBundle:Users')->find($selectedUser);
-          // Using the UserManager (from the FOSUserBundle)
-
           // Changing the role of the user
           $user->setRoles(array($selectedUser['role']));
           // Updating the user

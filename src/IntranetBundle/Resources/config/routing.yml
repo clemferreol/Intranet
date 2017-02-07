@@ -49,7 +49,7 @@ note_home:
     defaults: { _controller: IntranetBundle:Note:listNotesForUser }
 
 note_view:
-    path:      note/
+    path:      note/{id}
     defaults: { _controller: IntranetBundle:Note:view }
 
 note_add:

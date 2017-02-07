@@ -19,15 +19,16 @@
         <a href="{{ path('intranet_view', {'id': matiere.id}) }}">
           {{ matiere.title }}
         </a>
-        par {{ matiere.author }},
+        par {{ matiere.teacher }},
         le {{ matiere.date|date('d/m/Y') }}
+          {% endif %}
 
 
 
-        {% endif %}
       </li>
     {% else %}
-      <li>Pas (encore !) de matières</li>
+      <li>Pas (encore !) de notes</li>
+
     {% endfor %}
   </ul>
 

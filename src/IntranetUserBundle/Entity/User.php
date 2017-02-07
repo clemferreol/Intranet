@@ -5,6 +5,7 @@ namespace IntranetUserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="user")
@@ -43,6 +44,7 @@ class User extends BaseUser
 
   public function __construct()
 {
+   parent::__construct();
    $this->matiere = new ArrayCollection();
    $this->notes = new ArrayCollection();
    $this->matiereTeach = new ArrayCollection();

@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class NoteController extends Controller
@@ -29,8 +30,6 @@ class NoteController extends Controller
       ;
 
 
-
-    // Et modifiez le 2nd argument pour injecter notre liste
     return $this->render('IntranetBundle:Note:index.html.twig', array(
       'listNotes' => $listNotes
     ));
@@ -39,22 +38,20 @@ class NoteController extends Controller
 
     public function viewAction($id)
    {
-     // On récupère le repository
     $repository = $this->getDoctrine()
       ->getManager()
       ->getRepository('IntranetBundle:Note')
     ;
 
-    // On récupère l'entité correspondante à l'id $id
+
     $note = $repository->find($id);
 
-    // $advert est donc une instance de OC\PlatformBundle\Entity\Advert
-    // ou null si l'id $id  n'existe pas, d'où ce if :
+
     if (null === $note) {
       throw new NotFoundHttpException("La note d'id ".$id." n'existe pas.");
     }
 
-    // Le render ne change pas, on passait avant un tableau, maintenant un objet
+
     return $this->render('IntranetBundle:Note:view.html.twig', array(
       'note' => $note
     ));
@@ -107,44 +104,35 @@ class NoteController extends Controller
     */
    public function editAction($id, Request $request)
    {
-     // Récupération d'une annonce déjà existante, d'id $id.
         $note = $this->getDoctrine()
           ->getManager()
           ->getRepository('IntranetBundle:Note')
           ->find($id)
         ;
 
-        // Et on construit le formBuilder avec cette instance de l'annonce, comme précédemment
         $form = $this->get('form.factory')->createBuilder(FormType::class, $note)
         ->add('value',     TextType::class)
         ->add('comment',   TextareaType::class)
         ->add('save',      SubmitType::class)
         ->getForm();
       ;
-      // Si la requête est en POST
       if ($request->isMethod('POST')) {
-        // On fait le lien Requête <-> Formulaire
-        // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
+
         $form->handleRequest($request);
 
-        // On vérifie que les valeurs entrées sont correctes
-        // (Nous verrons la validation des objets en détail dans le prochain chapitre)
+
         if ($form->isValid()) {
-          // On enregistre notre objet $advert dans la base de données, par exemple
+
           $em = $this->getDoctrine()->getManager();
           $em->persist($note);
           $em->flush();
 
           $request->getSession()->getFlashBag()->add('notice', 'Note bien enregistrée.');
 
-          // On redirige vers la page de visualisation de l'annonce nouvellement créée
           return $this->redirectToRoute('note_view', array('id' => $note->getId()));
         }
       }
 
-      // À ce stade, le formulaire n'est pas valide car :
-      // - Soit la requête est de type GET, donc le visiteur vient d'arriver sur la page et veut voir le formulaire
-      // - Soit la requête est de type POST, mais le formulaire contient des valeurs invalides, donc on l'affiche de nouveau
       return $this->render('IntranetBundle:Note:add.html.twig', array(
         'form' => $form->createView(),
       ));
