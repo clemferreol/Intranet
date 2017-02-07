@@ -46,10 +46,10 @@ intranet_delete:
 
 note_home:
     path:      note/list
-    defaults: { _controller: IntranetBundle:Note:index }
+    defaults: { _controller: IntranetBundle:Note:listNotesForUser }
 
 note_view:
-    path:      note/{id}
+    path:      note/
     defaults: { _controller: IntranetBundle:Note:view }
 
 note_add:
@@ -67,3 +67,11 @@ note_delete:
     defaults: { _controller: IntranetBundle:Note:delete }
     requirements:
         id: \d+
+
+users_list:
+  path: admin/users/list
+  defaults: { _controller: IntranetBundle:User:listUsers }
+
+users_edit_role:
+  path: admin/users/edit/{username}
+  defaults: { _controller: IntranetBundle:User:editRole }

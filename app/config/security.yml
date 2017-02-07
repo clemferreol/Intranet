@@ -27,6 +27,9 @@ security:
       form_login:
         login_path: fos_user_security_login
         check_path: fos_user_security_check
+        always_use_default_target_path: false
+        default_target_path:            /intranet
+
       logout:
         path:       fos_user_security_logout
         target:     /login

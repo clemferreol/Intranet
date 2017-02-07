@@ -37,8 +37,9 @@
           {% endif %}
           {% if is_granted('ROLE_SUPER_ADMIN') %}
             <li><a href="{{ path('intranet_add') }}">Ajouter une matière</a></li>
+            <li><a href="{{ path('users_list') }}">Liste des Utilisateurs</a></li>
           {% endif %}
-          
+
           {% if is_granted('ROLE_USER') %}
             <li><a href="{{ path('note_home') }}">Liste des notes</a></li>
           {% endif %}

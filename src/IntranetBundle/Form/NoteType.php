@@ -42,7 +42,7 @@ public function __construct(EntityManager $manager, UserManager $userManager)
         'class' => 'IntranetUserBundle:User',
         'choice_label' => 'username',
         'em' => $options['entity_manager'],
-        
+
       ))
       ->add('matiere', EntityType::class, array(
         'class' => 'IntranetBundle:Matiere',

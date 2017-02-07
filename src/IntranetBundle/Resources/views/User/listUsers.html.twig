@@ -1,0 +1,23 @@
+{% extends "IntranetBundle::base.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block intranet_body %}
+
+  <h2>Liste des Utilisateurs</h2>
+
+  <ul>
+    {% for user in listUsers %}
+      <li>
+        <a href="{{ path('users_edit_role', {'username': user.username}) }}">
+          {{ user.username }}
+        </a>
+      </li>
+    {% else %}
+      <li>Pas (encore !) d'utilisateurs</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

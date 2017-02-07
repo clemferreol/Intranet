@@ -28,7 +28,7 @@ class NoteController extends Controller
         ->findAll()
       ;
 
-      
+
 
     // Et modifiez le 2nd argument pour injecter notre liste
     return $this->render('IntranetBundle:Note:index.html.twig', array(
@@ -182,5 +182,28 @@ class NoteController extends Controller
       'note' => $note,
       'form'   => $form->createView(),
     ));
+   }
+
+   public function listNotesForUserAction (Request $request){
+     $user = $this->getUser();
+     $em = $this->getDoctrine()->getManager();
+     $listAllNotes = $em->getRepository('IntranetBundle:Note')->findAll();
+     $listNotes = array();
+
+     foreach($listAllNotes as $note){
+      $students = $note->getStudent();
+       foreach($students as $student){
+         if($student == $user){
+           array_push($listNotes, $note);
+         }
+       }
+
+     }
+
+
+
+     return $this->render('IntranetBundle:Note:listNotes.html.twig', array(
+     'listNotes' => $listNotes,
+   ));
    }
 }
